@@ -5,18 +5,43 @@ import { AuthContext } from '../Context/AuthContext';
 const Register = () => {
   const {createUser} = useContext(AuthContext);
 
-    const handlesignIn = e =>{
+    const handleSignIn = e =>{
         e.preventDefault();
         const form = e.target;
-        const formData = new FormData(form);
-        const {email, password, ...restFormdata} = object.formEntries(formData.entries());
-        // console.log(email, password);
+        const email = form.email.value;
+        const password = form.password.value;
+        const name = form.name.value;
+        console.log(name, email, password);
 
         //create user in firebase 
 
         createUser(email, password)
         .then(result => {
-          console.log(result);
+          console.log(result.user);
+
+          const userProfile = {
+            email, name,
+            creationTime : result.user?.metadata?.creationTime,
+            lastSignInTime : result.user?.metadata?.lastSignInTime
+          }
+
+          //save profile info in database
+
+          fetch('http://localhost:3000/users', {
+            method: 'POST',
+            headers : {
+              'content-type' : 'application/json'
+            },
+            body: JSON.stringify(userProfile)
+          })
+          .then(res => res.json())
+          .then(data =>{
+            console.log(data);
+          })
+
+        })
+        .catch(error =>{
+          console.log(error);
         })
 
     
@@ -28,7 +53,7 @@ const Register = () => {
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
       <div className="card-body">
         <h1 className='text-3xl font-semibold text-center pb-10'>Register your account</h1>
-        <form onSubmit={handlesignIn} className="fieldset">
+        <form onSubmit={handleSignIn} className="fieldset">
           <label className="label">Name</label>
           <input type="text" name='name' className="input" placeholder="Name" />
           
@@ -39,7 +64,7 @@ const Register = () => {
           <input type="password" name='password' className="input" placeholder="Password" />
           <div><a className="link link-hover">Forgot password?</a></div>
 
-          <button type='submit' className="btn btn-neutral mt-4">Register</button>
+          <button className="btn btn-neutral mt-4">Register</button>
           <p>Already have an account? <Link to={'/login'}>Login</Link></p>
         </form>
       </div>
