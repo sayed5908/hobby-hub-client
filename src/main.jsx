@@ -10,6 +10,7 @@ import CreateGroups from './component/CreateGroups.jsx';
 import Login from './component/Login.jsx';
 import Register from './component/Register.jsx';
 import AuthProvider from './Context/AuthProvider.jsx';
+import PrivateRoute from './Context/PrivateRoute.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,9 @@ const router = createBrowserRouter([
       },
       {
         path: 'creategroup',
-        Component: CreateGroups
+        element: <PrivateRoute>
+          <CreateGroups></CreateGroups>
+        </PrivateRoute>
       },
       {
         path: 'login',
