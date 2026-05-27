@@ -18,10 +18,13 @@ const signInUser = (email, password) =>{
     return signInWithEmailAndPassword(auth, email, password);
 }
 
+// console.log(user.name);
 const logOut = () =>{
     return signOut(auth);
 }
-console.log(user);
+// console.log(user?.email);
+
+
 useEffect(()=>{
     const unSubscribe = onAuthStateChanged(auth, (currentUser)=>{
         setUser(currentUser);
@@ -31,6 +34,7 @@ useEffect(()=>{
         unSubscribe();
     }
 },[])
+
 
 const userInfo = {
     user,

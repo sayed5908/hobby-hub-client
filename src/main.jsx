@@ -11,6 +11,7 @@ import Login from './component/Login.jsx';
 import Register from './component/Register.jsx';
 import AuthProvider from './Context/AuthProvider.jsx';
 import PrivateRoute from './Context/PrivateRoute.jsx';
+import Profile from './component/Profile.jsx';
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,11 @@ const router = createBrowserRouter([
       {
         path: 'register',
         Component: Register
+      },
+      {
+        path: 'profile',
+        loader: () => fetch('http://localhost:3000/users'),
+        Component: Profile
       }
   ]
   },

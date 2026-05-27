@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { AuthContext } from '../Context/AuthProvider';
 
 const Navbar = () => {
-    const {user, logOut} = use(AuthContext)
+    const {user, setUser, loading, logOut} = use(AuthContext)
 
     const handleLogOut = () =>{
         logOut().then(() =>{
@@ -13,6 +13,8 @@ const Navbar = () => {
             console.log(error);
         })
     }
+    console.log(loading);
+
     return (
         <div className="flex justify-between items-center py-2 px-5 bg-base-100 shadow-sm">
             
@@ -24,7 +26,7 @@ const Navbar = () => {
                     alt="Logo"
                 />
             </div>
-            <div>{user && user.email}</div>
+            
             <div className='space-x-4'>
                 <Link to={'/'} className='btn btn-ghost'>Home</Link>
                 <button className='btn btn-ghost'>All Groups</button>
@@ -32,18 +34,27 @@ const Navbar = () => {
                 <button className='btn btn-ghost'>My Groups</button>
             </div>
 
-            {/* Buttons */}
             <div className="flex items-center gap-4">
                 {
                     user ? (<button onClick={handleLogOut} className="btn">LogOut</button>) : (<Link to={'/login'} className="btn">Sign In</Link>)
                 }
+                
+
+                {
+                    
+                    user && (<Link to={'/profile'}>
+                <img
+                    className="w-10 h-10 rounded-full hover:scale-110 transition"
+                    src={user?.url}
+                    alt="User"
+                    title={user?.name}
+                    
+                />
+                </Link>)
+                }
               
 
-                <img
-                    className="w-10 h-10 rounded-full"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                    alt="User"
-                />
+                
             </div>
         </div>
     );
