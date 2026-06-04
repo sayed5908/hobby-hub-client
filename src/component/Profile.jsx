@@ -1,10 +1,10 @@
-import React, { use, useState } from 'react';
+import React, { use, useEffect } from 'react';
 import { useLoaderData } from 'react-router';
 import { AuthContext } from '../Context/AuthProvider';
 
 const Profile = () => {
-    const initialUser = useLoaderData();
-    const [users, setUsers] = useState(initialUser);
+    const users = useLoaderData();
+    // const [users, setUsers] = useState(initialUser);
     const {user, setUser} = use(AuthContext);
     
 
@@ -14,6 +14,13 @@ const Profile = () => {
 
     const loggedInUser = users.find( singleUser => singleUser.email === user?.email)
     setUser(loggedInUser);
+
+     useEffect(() => {
+        if (loggedInUser) {
+            setUser(loggedInUser);
+        }
+    }, [loggedInUser, setUser]);
+
    
     return (
         <section className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-6 flex items-center gap-6">

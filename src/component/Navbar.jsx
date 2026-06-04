@@ -29,33 +29,42 @@ const Navbar = () => {
             
             <div className='space-x-4'>
                 <Link to={'/'} className='btn btn-ghost'>Home</Link>
-                <button className='btn btn-ghost'>All Groups</button>
+                <Link to={'/allGroups'} className='btn btn-ghost'>All Groups</Link>
                 <Link to={'/creategroup'} className='btn btn-ghost'>Create Groups</Link>
                 <button className='btn btn-ghost'>My Groups</button>
             </div>
 
-            <div className="flex items-center gap-4">
-                {
-                    user ? (<button onClick={handleLogOut} className="btn">LogOut</button>) : (<Link to={'/login'} className="btn">Sign In</Link>)
-                }
-                
+           <div className="flex items-center gap-4">
 
-                {
-                    
-                    user && (<Link to={'/profile'}>
-                <img
-                    className="w-10 h-10 rounded-full hover:scale-110 transition"
-                    src={user?.url}
-                    alt="User"
-                    title={user?.name}
-                    
-                />
-                </Link>)
-                }
-              
+    {
+        loading ? (
+            <span>Loading...</span>
+        ) : user ? (
+            <>
+                <Link to="/profile">
+                    <img
+                        className="w-10 h-10 rounded-full"
+                        src={user?.url}
+                        alt="User"
+                        title={user?.name}
+                    />
+                </Link>
 
-                
-            </div>
+                <button
+                    onClick={handleLogOut}
+                    className="btn"
+                >
+                    Logout
+                </button>
+            </>
+        ) : (
+            <Link to="/login" className="btn">
+                Sign In
+            </Link>
+        )
+    }
+
+</div>
         </div>
     );
 };

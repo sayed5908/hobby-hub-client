@@ -12,6 +12,7 @@ import Register from './component/Register.jsx';
 import AuthProvider from './Context/AuthProvider.jsx';
 import PrivateRoute from './Context/PrivateRoute.jsx';
 import Profile from './component/Profile.jsx';
+import Groups from './component/Groups.jsx';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
         path: 'profile',
         loader: () => fetch('http://localhost:3000/users'),
         Component: Profile
+      },
+      {
+        path: 'allGroups',
+        loader: () => fetch('http://localhost:3000/groups'),
+        Component: Groups
       }
   ]
   },
