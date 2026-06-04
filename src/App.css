@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @import "daisyui/daisyui.css";
+
+.active{
+    text-decoration: underline;
+}

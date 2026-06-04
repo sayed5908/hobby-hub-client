@@ -1,27 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router';
 
 const GCard = ({group}) => {
-  const  {name, category, description, location, members, url} = group;
+  const  {name, _id, category, description, url} = group;
     return (
-        <div className="card bg-base-100 w-90 shadow-sm">
+        <Link to={`/groupDetails/${_id}`} className="card bg-base-100 w-90 shadow-sm hover:bg-gray-200 hover:shadow-2xl hover:shadow-gray-200 hover:scale-101 transition-all duration-300 ease-in-out">
   <figure>
-    <img
+    <img className='w-full h-60'
       src={url}
       alt="Shoes" />
   </figure>
   <div className="card-body">
     <h2 className="card-title">
       {name}
-      <div className="badge badge-secondary">({members})</div>
-      <p className='text-sm font-extralight'>{category}</p>
+      <div className="badge badge-secondary">({category})</div>
     </h2>
     <p>{description}</p>
-    <p>Location: {location}</p>
-    <div className="card-actions justify-end">
-      <button className=" btn btn-soft btn-primary px-8">Join</button>
-    </div>
+   
   </div>
-</div>
+</Link>
     );
 };
 

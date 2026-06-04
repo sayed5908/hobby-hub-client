@@ -13,6 +13,7 @@ import AuthProvider from './Context/AuthProvider.jsx';
 import PrivateRoute from './Context/PrivateRoute.jsx';
 import Profile from './component/Profile.jsx';
 import Groups from './component/Groups.jsx';
+import GroupDetails from './component/GroupDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,13 @@ const router = createBrowserRouter([
         path: 'allGroups',
         loader: () => fetch('http://localhost:3000/groups'),
         Component: Groups
+      },
+      {
+        path: 'groupDetails/:id',
+        loader: ({params}) => fetch(`http://localhost:3000/groups/${params.id}`),
+        element: <PrivateRoute>
+          <GroupDetails></GroupDetails>
+        </PrivateRoute>
       }
   ]
   },
