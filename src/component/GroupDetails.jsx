@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaBook, FaCalendarAlt, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
 import { useLoaderData } from 'react-router';
+import { FaRegEdit } from "react-icons/fa";
+
 
 const GroupDetails = () => {
     const group = useLoaderData();
@@ -47,9 +49,12 @@ const isExpired = new Date(date) < new Date();
 
           {/* Description */}
           <div className="mb-10">
-            <h2 className="text-3xl font-bold mb-4">
+            <div className='flex justify-between'>
+              <h2 className="text-3xl font-bold mb-4">
               About This Group
             </h2>
+            <button className='btn btn-dash btn-info'>Update Group <FaRegEdit /></button>
+            </div>
 
             <p className="text-lg text-gray-600 leading-relaxed">
               {description}
@@ -93,7 +98,7 @@ const isExpired = new Date(date) < new Date();
                 ❌ This group is no longer active.
               </div>
             ) : (
-              <button className="btn btn-primary btn-lg px-10">
+              <button className="btn btn-primary w-full px-10">
                 Join Group
               </button>
             )}
