@@ -17,7 +17,6 @@ const MyGroups = () => {
    const myGroups = groupData.filter(
   group => group.userMail === user?.email
 );
-    // console.log(groups.name);
 
    const handleDelete = (id) => {
   Swal.fire({
