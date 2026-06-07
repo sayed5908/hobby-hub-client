@@ -15,7 +15,7 @@ const UpdateGroup = () => {
     
     
         //save data into database
-        fetch(`http://localhost:3000/groups/${_id}`, {
+        fetch(`https://hobby-hub-server-with-auth.vercel.app/groups/${_id}`, {
             method: 'PUT',
             headers: {
                 'content-type' : 'application/json'

@@ -20,20 +20,20 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    // console.log(email, password);
 
     //firebase sign in send
 
     signInUser(email, password)
       .then(result => {
-        console.log(result.user);
+        // console.log(result.user);
         navigate(`${location.state ? location.state : '/'}`)
         const signInInfo = {
           email,
           lastSignInTime: result.user?.metadata?.lastSignInTime
         }
 
-        fetch('http://localhost:3000/users', {
+        fetch('https://hobby-hub-server-with-auth.vercel.app/users', {
           method: 'PATCH',
           headers: {
             'content-type': 'application/json'
@@ -42,11 +42,11 @@ const Login = () => {
         })
           .then(res => res.json())
           .then(data => {
-            console.log('data after patch', data);
+            // console.log('data after patch', data);
           })
       })
       .catch(error => {
-        console.log(error);
+        // console.log(error);
 
         if (error.code === 'auth/invalid-credential') {
           setErrorMessage('Invalid email or password');

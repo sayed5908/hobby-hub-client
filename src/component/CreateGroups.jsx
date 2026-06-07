@@ -8,11 +8,11 @@ const CreateGroups = () => {
     const form = e.target;
     const formdata = new FormData(form);
     const newGroup = Object.fromEntries(formdata);
-    console.log(newGroup);
+    // console.log(newGroup);
 
 
     //save data into database
-    fetch('http://localhost:3000/groups', {
+    fetch('https://hobby-hub-server-with-auth.vercel.app/groups', {
       method: 'POST',
       headers: {
         'content-type': 'application/json'

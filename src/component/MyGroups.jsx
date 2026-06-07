@@ -1,121 +1,154 @@
 import React, { use, useState } from 'react';
 import { AuthContext } from '../Context/AuthProvider';
 import { Link, useLoaderData } from 'react-router';
-import GroupCard from './GroupCard';
 import { FaRegEdit } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 
 const MyGroups = () => {
-    const {user} = use(AuthContext);
+  const { user } = use(AuthContext);
 
-    // console.log(user.email);
+  const groups = useLoaderData();
+  const [groupData, setGroupData] = useState(groups);
 
-    const groups = useLoaderData();
+  const myGroups = groupData.filter(
+    group => group.userMail === user?.email
+  );
 
-    const [groupData, setGroupData] = useState(groups);
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to recover this group!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`https://hobby-hub-server-with-auth.vercel.app/groups/${id}`, {
+          method: 'DELETE',
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.deletedCount > 0) {
+              const remaining = groupData.filter(
+                group => group._id !== id
+              );
 
-   const myGroups = groupData.filter(
-  group => group.userMail === user?.email
-);
+              setGroupData(remaining);
 
-   const handleDelete = (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to recover this group!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!"
-  }).then((result) => {
-    if (result.isConfirmed) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Group deleted successfully.",
+                icon: "success"
+              });
+            }
+          });
+      }
+    });
+  };
 
-      fetch(`http://localhost:3000/groups/${id}`, {
-        method: 'DELETE',
-      })
-        .then(res => res.json())
-        .then(data => {
+  return (
+    <div className="max-w-7xl mx-auto px-2 md:px-4 mt-10">
 
-          if (data.deletedCount > 0) {
+      <h2 className="text-2xl md:text-4xl font-bold text-center mb-8">
+        My Groups
+      </h2>
 
-            const remaining = groupData.filter(
-              group => group._id !== id
-            );
+      <div className="overflow-x-auto rounded-lg shadow-lg">
 
-            setGroupData(remaining);
+        <table className="table table-zebra w-full">
 
-            Swal.fire({
-              title: "Deleted!",
-              text: "Group deleted successfully.",
-              icon: "success"
-            });
-          }
-        });
-    }
-  });
-};
-    return (
-  <div className="overflow-x-auto mt-10">
-    <h2 className="text-3xl font-bold text-center mb-6">
-      My Groups
-    </h2>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Image</th>
+              <th>Group Name</th>
 
-    <table className="table table-zebra">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Image</th>
-          <th>Group Name</th>
-          <th>Category</th>
-          <th>Members</th>
-          <th>Location</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+              <th className="hidden md:table-cell">
+                Category
+              </th>
 
-      <tbody>
-        {myGroups.map((group, index) => (
-          <tr key={group._id}>
-            <td>{index + 1}</td>
+              <th className="hidden lg:table-cell">
+                Members
+              </th>
 
-            <td>
-              <img
-                src={group.url}
-                alt={group.name}
-                className="w-16 h-16 rounded object-cover"
-              />
-            </td>
+              <th className="hidden lg:table-cell">
+                Location
+              </th>
 
-            <td>{group.name}</td>
+              <th>Actions</th>
+            </tr>
+          </thead>
 
-            <td>
-              <span className="badge badge-primary">
-                {group.category}
-              </span>
-            </td>
+          <tbody>
+            {myGroups.map((group, index) => (
+              <tr key={group._id}>
 
-            <td>{group.members}</td>
+                <td>{index + 1}</td>
 
-            <td>{group.location}</td>
+                <td>
+                  <img
+                    src={group.url}
+                    alt={group.name}
+                    className="w-12 h-12 md:w-16 md:h-16 rounded object-cover"
+                  />
+                </td>
 
-            <td className="space-x-2">
-              <Link
-                to={`/updateGroup/${group._id}`}
-                className="btn btn-sm btn-info"
-              >
-                Update Group <FaRegEdit />
-              </Link>
+                <td>
+                  <div className="font-semibold">
+                    {group.name}
+                  </div>
 
-              <button onClick={() => handleDelete(group._id)} className="btn btn-error btn-sm">
-                Delete
-              </button>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
-);
+                  {/* Show category under name on mobile */}
+                  <div className="md:hidden text-xs text-gray-500 mt-1">
+                    {group.category}
+                  </div>
+                </td>
+
+                <td className="hidden md:table-cell">
+                  <span className="badge badge-primary">
+                    {group.category}
+                  </span>
+                </td>
+
+                <td className="hidden lg:table-cell">
+                  {group.members}
+                </td>
+
+                <td className="hidden lg:table-cell">
+                  {group.location}
+                </td>
+
+                <td>
+                  <div className="flex flex-col md:flex-row gap-2">
+
+                    <Link
+                      to={`/updateGroup/${group._id}`}
+                      className="btn btn-info btn-xs md:btn-sm"
+                    >
+                      Update <FaRegEdit />
+                    </Link>
+
+                    <button
+                      onClick={() => handleDelete(group._id)}
+                      className="btn btn-error btn-xs md:btn-sm"
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+                </td>
+
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+
+      </div>
+    </div>
+  );
 };
 
 export default MyGroups;

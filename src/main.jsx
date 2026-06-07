@@ -16,15 +16,17 @@ import Groups from './component/Groups.jsx';
 import GroupDetails from './component/GroupDetails.jsx';
 import UpdateGroup from './component/UpdateGroup.jsx';
 import MyGroups from './component/MyGroups.jsx';
+import Error from './component/Error.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayout,
+    errorElement: <Error></Error>,
     children: [
       {
       path: '/',
-      loader: () => fetch('http://localhost:3000/groups'),
+      loader: () => fetch('https://hobby-hub-server-with-auth.vercel.app/groups'),
       Component: Home
       },
       {
@@ -43,29 +45,29 @@ const router = createBrowserRouter([
       },
       {
         path: 'profile',
-        loader: () => fetch('http://localhost:3000/users'),
+        loader: () => fetch('https://hobby-hub-server-with-auth.vercel.app/users'),
         Component: Profile
       },
       {
         path: 'allGroups',
-        loader: () => fetch('http://localhost:3000/groups'),
+        loader: () => fetch('https://hobby-hub-server-with-auth.vercel.app/groups'),
         Component: Groups
       },
       {
         path: 'groupDetails/:id',
-        loader: ({params}) => fetch(`http://localhost:3000/groups/${params.id}`),
+        loader: ({params}) => fetch(`https://hobby-hub-server-with-auth.vercel.app/groups/${params.id}`),
         element: <PrivateRoute>
           <GroupDetails></GroupDetails>
         </PrivateRoute>
       },
       {
         path: 'updateGroup/:id',
-        loader: ({params}) => fetch(`http://localhost:3000/groups/${params.id}`),
+        loader: ({params}) => fetch(`https://hobby-hub-server-with-auth.vercel.app/groups/${params.id}`),
         Component: UpdateGroup
       },
       {
         path: 'myGroups',
-        loader: () => fetch('http://localhost:3000/groups'),
+        loader: () => fetch('https://hobby-hub-server-with-auth.vercel.app/groups'),
         element: <PrivateRoute>
           <MyGroups></MyGroups>
         </PrivateRoute>
