@@ -1,12 +1,15 @@
 import React from 'react';
 import { FaBook, FaCalendarAlt, FaMapMarkerAlt, FaUsers } from 'react-icons/fa';
-import { useLoaderData } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 import { FaRegEdit } from "react-icons/fa";
 
-
 const GroupDetails = () => {
-    const group = useLoaderData();
-     const {
+  const group = useLoaderData();
+
+  const {
+    _id,
+    user,
+    userMail,
     name,
     category,
     description,
@@ -16,11 +19,10 @@ const GroupDetails = () => {
     url,
   } = group;
 
-const isExpired = new Date(date) < new Date();
+  const isExpired = new Date(date) < new Date();
 
-    // console.log(group);
-    return (
-          <div className="max-w-7xl mx-auto px-4 py-10">
+  return (
+    <div className="max-w-7xl mx-auto px-4 py-10">
       <div className="bg-base-100 shadow-xl rounded-3xl overflow-hidden">
 
         {/* Hero Image */}
@@ -49,11 +51,17 @@ const isExpired = new Date(date) < new Date();
 
           {/* Description */}
           <div className="mb-10">
-            <div className='flex justify-between'>
-              <h2 className="text-3xl font-bold mb-4">
-              About This Group
-            </h2>
-            <button className='btn btn-dash btn-info'>Update Group <FaRegEdit /></button>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-3xl font-bold">
+                About This Group
+              </h2>
+
+              {/* <Link
+                to={`/updateGroup/${_id}`}
+                className="btn btn-dash btn-info"
+              >
+                Update Group <FaRegEdit />
+              </Link> */}
             </div>
 
             <p className="text-lg text-gray-600 leading-relaxed">
@@ -61,8 +69,25 @@ const isExpired = new Date(date) < new Date();
             </p>
           </div>
 
+          {/* Group Creator */}
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold mb-4">
+              Group Creator
+            </h2>
+
+            <div className="bg-base-200 p-6 rounded-2xl">
+              <p className="text-lg mb-2">
+                <span className="font-bold">Name:</span> {user}
+              </p>
+
+              <p className="text-lg">
+                <span className="font-bold">Email:</span> {userMail}
+              </p>
+            </div>
+          </div>
+
           {/* Information */}
-          <div className="grid md:grid-cols-4 gap-6 mb-10">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
 
             <div className="bg-base-200 p-6 rounded-2xl text-center">
               <FaBook className="text-3xl mx-auto mb-3 text-primary" />
@@ -108,7 +133,7 @@ const isExpired = new Date(date) < new Date();
         </div>
       </div>
     </div>
-    );
+  );
 };
 
 export default GroupDetails;

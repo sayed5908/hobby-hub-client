@@ -26,13 +26,7 @@ const Home = () => {
                 ))}
             </div>
 
-            {groups.length > 6 && (
-                <div className='flex justify-center mt-8'>
-                    <Link to="/allGroups" className='btn btn-soft btn-primary w-full'>
-                        See More
-                    </Link>
-                </div>
-            )}
+            
         </div>
         <HobbyCategories></HobbyCategories>
         <WhyJoin></WhyJoin>

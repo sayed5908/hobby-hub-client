@@ -17,7 +17,7 @@ const Navbar = () => {
     console.log(loading);
 
     return (
-        <div className="flex justify-between items-center py-2 px-5 bg-base-100 shadow-sm">
+        <div className="flex justify-between items-center py-2 px-5 bg-base-100 sticky top-0 z-50 bg-white shadow-sm">
             
             {/* Logo */}
             <div>
@@ -32,7 +32,7 @@ const Navbar = () => {
                 <Link to={'/'} className='btn btn-ghost'>Home</Link>
                 <Link to={'/allGroups'} className='btn btn-ghost'>All Groups</Link>
                 <Link to={'/creategroup'} className='btn btn-ghost'>Create Groups</Link>
-                <button className='btn btn-ghost'>My Groups</button>
+                <Link to={'/myGroups'} className='btn btn-ghost'>My Groups</Link>
             </div>
 
            <div className="flex items-center gap-4">
@@ -53,13 +53,13 @@ const Navbar = () => {
 
                 <button
                     onClick={handleLogOut}
-                    className="btn btn-primary"
+                    className="btn btn-sm btn-primary"
                 >
                     Logout
                 </button>
             </>
         ) : (
-            <Link to="/login" className="btn">
+            <Link to="/login" className="btn btn-sm">
                 Sign In
             </Link>
         )

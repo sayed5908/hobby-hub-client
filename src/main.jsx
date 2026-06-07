@@ -14,6 +14,8 @@ import PrivateRoute from './Context/PrivateRoute.jsx';
 import Profile from './component/Profile.jsx';
 import Groups from './component/Groups.jsx';
 import GroupDetails from './component/GroupDetails.jsx';
+import UpdateGroup from './component/UpdateGroup.jsx';
+import MyGroups from './component/MyGroups.jsx';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +56,18 @@ const router = createBrowserRouter([
         loader: ({params}) => fetch(`http://localhost:3000/groups/${params.id}`),
         element: <PrivateRoute>
           <GroupDetails></GroupDetails>
+        </PrivateRoute>
+      },
+      {
+        path: 'updateGroup/:id',
+        loader: ({params}) => fetch(`http://localhost:3000/groups/${params.id}`),
+        Component: UpdateGroup
+      },
+      {
+        path: 'myGroups',
+        loader: () => fetch('http://localhost:3000/groups'),
+        element: <PrivateRoute>
+          <MyGroups></MyGroups>
         </PrivateRoute>
       }
   ]
