@@ -6,11 +6,6 @@ const Profile = () => {
     const users = useLoaderData();
     // const [users, setUsers] = useState(initialUser);
     const {user, setUser} = use(AuthContext);
-    
-
-    if(user){
-        console.log(user.email); //user logged in
-    }
 
     const loggedInUser = users.find( singleUser => singleUser.email === user?.email)
     setUser(loggedInUser);

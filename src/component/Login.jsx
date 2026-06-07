@@ -7,9 +7,9 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { signInUser } = use(AuthContext);
+  const { signInUser, user, setUser } = use(AuthContext);
   const location = useLocation();
-  console.log(location);
+  // console.log(location);
   const navigate = useNavigate();
 
   

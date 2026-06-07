@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 const MyGroups = () => {
     const {user} = use(AuthContext);
 
-    console.log(user.email);
+    // console.log(user.email);
 
     const groups = useLoaderData();
 

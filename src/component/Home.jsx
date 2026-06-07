@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { use } from 'react';
 import Banner from './Banner';
 import { useLoaderData, Link } from 'react-router';
 import GCard from './GCard';
 import HobbyCategories from './HobbyCategories';
 import WhyJoin from './WhyJoin';
+import { AuthContext } from '../Context/AuthProvider';
 
 const Home = () => {
     const groups = useLoaderData();
+
+    const {user} = use(AuthContext)
 
     return (
         <div>

@@ -56,12 +56,6 @@ const GroupDetails = () => {
                 About This Group
               </h2>
 
-              {/* <Link
-                to={`/updateGroup/${_id}`}
-                className="btn btn-dash btn-info"
-              >
-                Update Group <FaRegEdit />
-              </Link> */}
             </div>
 
             <p className="text-lg text-gray-600 leading-relaxed">

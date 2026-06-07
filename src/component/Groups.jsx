@@ -4,7 +4,7 @@ import GCard from './GCard';
 
 const Groups = () => {
     const groups = useLoaderData();
-    console.log(groups);
+    // console.log(groups);
 
     return (
         <div>
